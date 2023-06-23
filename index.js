@@ -251,3 +251,9 @@ if (!nativeBinding) {
   }
   throw new Error(`Failed to load native binding`)
 }
+
+const { aidRegExp, genAid, parseAid } = nativeBinding
+
+module.exports.aidRegExp = aidRegExp
+module.exports.genAid = genAid
+module.exports.parseAid = parseAid
