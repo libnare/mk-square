@@ -1,0 +1,20 @@
+{
+  "name": "@libnare/mk-square-darwin-arm64",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "main": "mk-square.darwin-arm64.node",
+  "files": [
+    "mk-square.darwin-arm64.node"
+  ],
+  "description": "Mk^ - Internal library for Misskey backend",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "repository": "https://github.com/libnare/mk-square.git"
+}

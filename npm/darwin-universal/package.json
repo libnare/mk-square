@@ -1,0 +1,17 @@
+{
+  "name": "@libnare/mk-square-darwin-universal",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "main": "mk-square.darwin-universal.node",
+  "files": [
+    "mk-square.darwin-universal.node"
+  ],
+  "description": "Mk^ - Internal library for Misskey backend",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "repository": "https://github.com/libnare/mk-square.git"
+}

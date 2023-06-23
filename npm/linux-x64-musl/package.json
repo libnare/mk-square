@@ -1,0 +1,23 @@
+{
+  "name": "@libnare/mk-square-linux-x64-musl",
+  "version": "0.0.0",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "main": "mk-square.linux-x64-musl.node",
+  "files": [
+    "mk-square.linux-x64-musl.node"
+  ],
+  "description": "Mk^ - Internal library for Misskey backend",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "repository": "https://github.com/libnare/mk-square.git",
+  "libc": [
+    "musl"
+  ]
+}

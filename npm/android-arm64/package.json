@@ -1,0 +1,20 @@
+{
+  "name": "@libnare/mk-square-android-arm64",
+  "version": "0.0.0",
+  "os": [
+    "android"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "main": "mk-square.android-arm64.node",
+  "files": [
+    "mk-square.android-arm64.node"
+  ],
+  "description": "Mk^ - Internal library for Misskey backend",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "repository": "https://github.com/libnare/mk-square.git"
+}
