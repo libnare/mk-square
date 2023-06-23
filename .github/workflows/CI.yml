@@ -166,17 +166,12 @@ jobs:
           usesh: true
           mem: 3000
           prepare: |
-            pkg install -y -f curl node libnghttp2
-            curl -qL https://www.npmjs.com/install.sh | sh
-            npm install --location=global --ignore-scripts yarn
+            pkg install -y -f curl node yarn libnghttp2
             curl https://sh.rustup.rs -sSf --output rustup.sh
             sh rustup.sh -y --profile minimal --default-toolchain beta
-            export PATH="/usr/local/cargo/bin:$PATH"
-            echo "~~~~ rustc --version ~~~~"
+            setenv PATH "/usr/local/cargo/bin:$PATH"
             rustc --version
-            echo "~~~~ node -v ~~~~"
             node -v
-            echo "~~~~ yarn --version ~~~~"
             yarn --version
           run: |
             export PATH="/usr/local/cargo/bin:$PATH"
@@ -185,6 +180,7 @@ jobs:
             whoami
             env
             freebsd-version
+            yarn -v
             yarn install
             yarn build
             strip -x *.node
@@ -209,9 +205,9 @@ jobs:
           - host: windows-latest
             target: x86_64-pc-windows-msvc
         node:
-          - '14'
-          - '16'
           - '18'
+          - '19'
+          - '20'
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v3
@@ -241,9 +237,9 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - '14'
-          - '16'
           - '18'
+          - '19'
+          - '20'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -273,9 +269,9 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - '14'
-          - '16'
           - '18'
+          - '19'
+          - '20'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -307,9 +303,9 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - '14'
-          - '16'
           - '18'
+          - '19'
+          - '20'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -381,9 +377,9 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - '14'
-          - '16'
           - '18'
+          - '19'
+          - '20'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -481,15 +477,15 @@ jobs:
         run: |
           if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$";
           then
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" >> ~/.npmrc
             npm publish --access public
           elif git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+";
           then
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" >> ~/.npmrc
             npm publish --tag next --access public
           else
             echo "Not a release, skipping publish"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
