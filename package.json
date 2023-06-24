@@ -27,9 +27,6 @@
     "@napi-rs/cli": "^2.16.1",
     "vitest": "^0.32.2"
   },
-  "ava": {
-    "timeout": "3m"
-  },
   "engines": {
     "node": ">= 10"
   },
