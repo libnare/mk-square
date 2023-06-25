@@ -7,3 +7,5 @@ Internal library for Misskey backend
     - function `genAid`
     - interface `ParseAid`
     - function `parseAid`
+- check_https
+    - function `checkHttps`

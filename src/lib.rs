@@ -4,3 +4,4 @@
 extern crate napi_derive;
 
 pub mod aid;
+pub mod check_https;

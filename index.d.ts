@@ -9,3 +9,4 @@ export interface ParseAid {
   date: Date
 }
 export function parseAid(id: string): ParseAid
+export function checkHttps(url: string, nodeEnv?: string | undefined | null): boolean
