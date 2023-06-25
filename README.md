@@ -9,3 +9,5 @@ Internal library for Misskey backend
     - function `parseAid`
 - check_https
     - function `checkHttps`
+- correct_filename
+    - function `correctFilename`
