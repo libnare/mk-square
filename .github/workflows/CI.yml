@@ -475,7 +475,9 @@ jobs:
           check-latest: true
           cache: yarn
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install
+          npm install -g @napi-rs/cli
       - name: Download all artifacts
         uses: actions/download-artifact@v3
         with:
