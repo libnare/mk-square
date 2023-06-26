@@ -14,3 +14,7 @@ Internal library for Misskey backend
 - secure_rndstr
     - const `L_CHARS`
     - function `secureRndstr`
+- acct
+    - interface `Acct`
+    - function `parse`
+    - function `toString`

@@ -13,3 +13,9 @@ export function checkHttps(url: string, nodeEnv?: string | undefined | null): bo
 export function correctFilename(filename: string, ext?: string | undefined | null): string
 export const L_CHARS: string
 export function secureRndstr(length?: number | undefined | null, chars?: string | undefined | null): string
+export interface Acct {
+  username: string
+  host?: string
+}
+export function parse(acct: string): Acct
+export function toString(acct: Acct): string
