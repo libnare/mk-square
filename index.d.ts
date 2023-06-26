@@ -11,3 +11,5 @@ export interface ParseAid {
 export function parseAid(id: string): ParseAid
 export function checkHttps(url: string, nodeEnv?: string | undefined | null): boolean
 export function correctFilename(filename: string, ext?: string | undefined | null): string
+export const L_CHARS: string
+export function secureRndstr(length?: number | undefined | null, chars?: string | undefined | null): string

@@ -11,3 +11,6 @@ Internal library for Misskey backend
     - function `checkHttps`
 - correct_filename
     - function `correctFilename`
+- secure_rndstr
+    - const `L_CHARS`
+    - function `secureRndstr`
