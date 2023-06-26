@@ -6,5 +6,5 @@ extern crate napi_derive;
 pub mod aid;
 pub mod check_https;
 pub mod corrent_filename;
-mod secure_rndstr;
+pub mod secure_rndstr;
 pub mod acct;

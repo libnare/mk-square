@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { aidRegExp, genAid, parseAid } from "../index.js";
+import {describe, expect, it} from "vitest";
+import {aidRegExp, genAid, parseAid} from "../index.js";
 
 describe("aid", () => {
     it("should generate a valid aid", () => {

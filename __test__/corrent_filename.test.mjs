@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { correctFilename } from "../index.js";
+import {describe, expect, it} from "vitest";
+import {correctFilename} from "../index.js";
 
 describe("corrent_filename", () => {
     it('returns the filename as is if it already ends with the correct extension', () => {

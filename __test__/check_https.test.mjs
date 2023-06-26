@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { checkHttps } from "../index.js";
+import {describe, expect, it} from "vitest";
+import {checkHttps} from "../index.js";
 
 describe("check_https", () => {
     it("should return true for an HTTPS URL", () => {
