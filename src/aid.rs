@@ -1,7 +1,6 @@
 use std::time::{Duration, SystemTime};
 
 use chrono::{DateTime, Utc};
-use rand::Rng;
 
 #[napi(js_name = "aidRegExp")]
 pub const AID_REG_EXP: &str = "^[0-9a-z]{10}$";
@@ -32,9 +31,19 @@ fn get_time(time: i64) -> String {
 }
 
 fn get_noise() -> String {
-    let counter: u32 = rand::thread_rng().gen();
-    let noise = to_base36(counter as u64);
-    format!("{:0>2}", &noise[..2])
+    const MAX_COUNTER: u32 = 36 * 36; // 36^2 = 1296
+    thread_local! {
+        static COUNTER: std::cell::RefCell<u32> = std::cell::RefCell::new(0);
+    }
+
+    let noise: String = COUNTER.with(|counter| {
+        let mut counter = counter.borrow_mut();
+        let noise = to_base36(*counter as u64);
+        *counter = (*counter + 1) % MAX_COUNTER;
+        noise
+    });
+
+    format!("{:0>2}", noise)
 }
 
 #[napi]

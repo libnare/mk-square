@@ -10,10 +10,25 @@ describe("aid", () => {
     });
 
     it("should generate a unique aid for each invocation", () => {
-        const date1 = new Date();
-        const date2 = new Date();
-        const aid1 = genAid(date1);
-        const aid2 = genAid(date2);
-        expect(aid1).not.toBe(aid2);
+        let date = new Date();
+        const generatedAids = new Set();
+        const duplicatedAids = new Set();
+
+        for (let i = 0; i < 12960; i++) {
+            const aid = genAid(date);
+            expect(aid).toMatch(RegExp(aidRegExp));
+
+            if (generatedAids.has(aid)) {
+                duplicatedAids.add(aid);
+            } else {
+                generatedAids.add(aid);
+            }
+
+            if (i % 1296 === 0) {
+                date.setSeconds(date.getSeconds() + 1);
+            }
+        }
+
+        expect(duplicatedAids.size).toBe(0);
     });
 });
