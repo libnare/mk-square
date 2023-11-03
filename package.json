@@ -24,8 +24,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@napi-rs/cli": "^2.16.1",
-    "vitest": "^0.32.2"
+    "@napi-rs/cli": "^2.16.5",
+    "vitest": "^0.34.6"
   },
   "engines": {
     "node": ">= 10"
@@ -40,5 +40,5 @@
     "universal": "napi universal",
     "version": "napi version"
   },
-  "packageManager": "yarn@3.6.0"
+  "packageManager": "yarn@4.0.1"
 }
