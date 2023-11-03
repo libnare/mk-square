@@ -13,7 +13,7 @@ describe("acct", () => {
 
         const acct2 = parse('@test');
         expect(acct2.username).toBe('test');
-        expect(acct2.host).toBeUndefined();
+        expect(acct2.host).toBeNull();
     });
 
     it('should convert acct object to string', () => {

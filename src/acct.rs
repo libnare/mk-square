@@ -1,3 +1,5 @@
+use napi::{Env, JsObject};
+
 #[napi(object)]
 pub struct Acct {
     pub username: String,
@@ -5,12 +7,23 @@ pub struct Acct {
 }
 
 #[napi]
-pub fn parse(acct: String) -> Acct {
+pub fn parse(env: Env, acct: String) -> napi::Result<JsObject> {
     let acct = acct.trim_start_matches('@').to_owned();
     let mut split = acct.splitn(2, '@');
     let username = split.next().unwrap().to_owned();
     let host = split.next().map(str::to_owned);
-    Acct { username, host }
+    let mut obj = env.create_object()?;
+    match host {
+        Some(host) => {
+            obj.set_named_property("username", username)?;
+            obj.set_named_property("host", host)?;
+        },
+        None => {
+            obj.set_named_property("username", username)?;
+            obj.set_named_property("host", &env.get_null()?)?;
+        }
+    }
+    Ok(obj)
 }
 
 #[napi]
