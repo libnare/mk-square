@@ -54,7 +54,7 @@ fn gen_aid(t: i64) -> String {
     aid
 }
 
-#[napi]
+#[napi(ts_return_type="{ date: Date; }")]
 fn parse_aid(env: Env, id: String) -> napi::Result<JsObject> {
     let time = i64::from_str_radix(&id[..8], 36).unwrap() + TIME2000;
     let system_time = SystemTime::UNIX_EPOCH
