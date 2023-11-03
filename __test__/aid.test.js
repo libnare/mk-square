@@ -1,5 +1,4 @@
-import {describe, expect, it} from "vitest";
-import {aidRegExp, genAid, parseAid} from "../index.js";
+const {aidRegExp, genAid, parseAid} = require("../index.js");
 
 describe("aid", () => {
     it("should generate a valid aid", () => {

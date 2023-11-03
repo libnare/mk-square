@@ -25,7 +25,7 @@
   "license": "MIT",
   "devDependencies": {
     "@napi-rs/cli": "^2.16.5",
-    "vitest": "^0.34.6"
+    "jest": "^29.7.0"
   },
   "engines": {
     "node": ">= 10"
@@ -36,7 +36,7 @@
     "build": "napi build --platform --release",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "vitest test --reporter verbose --run",
+    "test": "jest",
     "universal": "napi universal",
     "version": "napi version"
   },

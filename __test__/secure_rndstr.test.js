@@ -1,5 +1,4 @@
-import {describe, expect, it} from "vitest";
-import {L_CHARS, secureRndstr} from "../index.js";
+const {L_CHARS, secureRndstr} = require("../index.js");
 
 describe("secure_rndstr", () => {
     it("should generate a 32-character string consisting of numbers, uppercase letters, and lowercase letters if length is not specified", () => {

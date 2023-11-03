@@ -1,5 +1,4 @@
-import {describe, expect, it} from "vitest";
-import {parse, toString} from '../index.js';
+const {parse, toString} = require("../index.js");
 
 describe("acct", () => {
     it('should parse acct correctly', () => {
