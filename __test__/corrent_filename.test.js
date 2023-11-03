@@ -1,38 +1,43 @@
 const { correctFilename } = require("../index.js");
 
-describe("corrent_filename", () => {
-    it('returns the filename as is if it already ends with the correct extension', () => {
-        const filename = 'image.png';
-        const ext = 'png';
-        expect(correctFilename(filename, ext)).toBe(filename);
+describe(correctFilename, () => {
+    it('no ext to null', () => {
+        expect(correctFilename('test', null)).toBe('test.unknown');
     });
-
-    it('returns the filename as is if the extension is "jpg" and the filename ends with ".jpeg"', () => {
-        const filename = 'photo.jpeg';
-        const ext = 'jpg';
-        expect(correctFilename(filename, ext)).toBe(filename);
+    it('no ext to jpg', () => {
+        expect(correctFilename('test', 'jpg')).toBe('test.jpg');
     });
-
-    it('returns the filename as is if the extension is "tif" and the filename ends with ".tiff"', () => {
-        const filename = 'scan.tiff';
-        const ext = 'tif';
-        expect(correctFilename(filename, ext)).toBe(filename);
+    it('jpg to webp', () => {
+        expect(correctFilename('test.jpg', 'webp')).toBe('test.jpg.webp');
     });
-
-    it('appends the correct extension to the filename if it does not already have it', () => {
-        const filename = 'document';
-        const ext = 'pdf';
-        expect(correctFilename(filename, ext)).toBe('document.pdf');
+    it('jpg to .webp', () => {
+        expect(correctFilename('test.jpg', '.webp')).toBe('test.jpg.webp');
     });
-
-    it('appends ".unknown" extension to the filename if ext is null', () => {
-        const filename = 'file';
-        const ext = null;
-        expect(correctFilename(filename, ext)).toBe('file.unknown');
+    it('jpeg to jpg', () => {
+        expect(correctFilename('test.jpeg', 'jpg')).toBe('test.jpeg');
     });
-
-    it('appends ".unknown" extension to the filename if ext is not provided', () => {
-        const filename = 'file';
-        expect(correctFilename(filename)).toBe('file.unknown');
+    it('JPEG to jpg', () => {
+        expect(correctFilename('test.JPEG', 'jpg')).toBe('test.JPEG');
+    });
+    it('jpg to jpg', () => {
+        expect(correctFilename('test.jpg', 'jpg')).toBe('test.jpg');
+    });
+    it('JPG to jpg', () => {
+        expect(correctFilename('test.JPG', 'jpg')).toBe('test.JPG');
+    });
+    it('tiff to tif', () => {
+        expect(correctFilename('test.tiff', 'tif')).toBe('test.tiff');
+    });
+    it('skip gz', () => {
+        expect(correctFilename('test.unitypackage', 'gz')).toBe('test.unitypackage');
+    });
+    it('skip text file', () => {
+        expect(correctFilename('test.txt', null)).toBe('test.txt');
+    });
+    it('unknown', () => {
+        expect(correctFilename('test.hoge', null)).toBe('test.hoge');
+    });
+    test('non ascii with space', () => {
+        expect(correctFilename('ファイル 名前', 'jpg')).toBe('ファイル 名前.jpg');
     });
 });
