@@ -5,7 +5,6 @@ Internal library for Misskey backend
 - aid
     - const `aidRegExp`
     - function `genAid`
-    - interface `ParseAid`
     - function `parseAid`
 - check_https
     - function `checkHttps`

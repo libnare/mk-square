@@ -1,6 +1,7 @@
 use std::time::{Duration, SystemTime};
 
 use chrono::{DateTime, Utc};
+use napi::{Env, JsObject};
 use rand::Rng;
 
 #[napi(js_name = "aidRegExp")]
@@ -42,8 +43,7 @@ fn get_noise() -> String {
 }
 
 #[napi]
-fn gen_aid(date: DateTime<Utc>) -> String {
-    let t = date.timestamp_millis();
+fn gen_aid(t: i64) -> String {
     let time = get_time(t);
     let noise = get_noise();
 
@@ -54,17 +54,14 @@ fn gen_aid(date: DateTime<Utc>) -> String {
     aid
 }
 
-#[napi(object)]
-struct ParseAid {
-    pub date: DateTime<Utc>,
-}
-
 #[napi]
-fn parse_aid(id: String) -> ParseAid {
+fn parse_aid(env: Env, id: String) -> napi::Result<JsObject> {
     let time = i64::from_str_radix(&id[..8], 36).unwrap() + TIME2000;
     let system_time = SystemTime::UNIX_EPOCH
         .checked_add(Duration::from_millis(time as u64))
         .ok_or("Failed to parse AID: Invalid Date").unwrap();
+    let mut obj = env.create_object()?;
+    obj.set_named_property("date", DateTime::<Utc>::from(system_time))?;
 
-    ParseAid { date: DateTime::<Utc>::from(system_time) }
+    return Ok(obj);
 }
