@@ -6,7 +6,7 @@ pub struct Acct {
     pub host: Option<String>,
 }
 
-#[napi]
+#[napi(ts_return_type="{ username: string; host: string | null; }")]
 pub fn parse(env: Env, acct: String) -> napi::Result<JsObject> {
     let acct = acct.trim_start_matches('@').to_owned();
     let mut split = acct.splitn(2, '@');

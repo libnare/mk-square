@@ -14,5 +14,5 @@ export interface Acct {
   username: string
   host?: string
 }
-export function parse(acct: string): object
+export function parse(acct: string): { username: string; host: string | null; }
 export function toString(acct: Acct): string
