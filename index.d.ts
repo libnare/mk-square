@@ -12,7 +12,7 @@ export const L_CHARS: string
 export function secureRndstr(length?: number | undefined | null, chars?: string | undefined | null): string
 export interface Acct {
   username: string
-  host?: string
+  host?: string | null
 }
 export function parse(acct: string): { username: string; host: string | null; }
 export function toString(acct: Acct): string

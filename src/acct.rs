@@ -3,6 +3,7 @@ use napi::{Env, JsObject};
 #[napi(object)]
 pub struct Acct {
     pub username: String,
+    #[napi(ts_type = "string | null")]
     pub host: Option<String>,
 }
 
