@@ -252,12 +252,11 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { aidRegExp, genAid, parseAid, checkHttps, correctFilename, L_CHARS, secureRndstr, parse, toString, Nsfw, detectSensitivity } = nativeBinding
+const { aidRegExp, genAid, parseAid, correctFilename, L_CHARS, secureRndstr, parse, toString, Nsfw, detectSensitivity } = nativeBinding
 
 module.exports.aidRegExp = aidRegExp
 module.exports.genAid = genAid
 module.exports.parseAid = parseAid
-module.exports.checkHttps = checkHttps
 module.exports.correctFilename = correctFilename
 module.exports.L_CHARS = L_CHARS
 module.exports.secureRndstr = secureRndstr
