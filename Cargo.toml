@@ -12,7 +12,7 @@ napi = { version = "2.14.1", default-features = false, features = ["napi4", "chr
 napi-derive = "2.14.2"
 rand = "0.8.5"
 chrono = "0.4.31"
-url = "2.4.1"
+url = "2.5.0"
 lazy_static = "1.4.0"
 regex = "1.10.2"
 image = { version = "0.24.7", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
