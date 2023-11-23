@@ -16,6 +16,9 @@ export interface Acct {
 export function parse(acct: string): { username: string; host: string | null; }
 export function toString(acct: Acct): string
 export function detectSensitivity(path: string, mime: string, sensitiveThreshold: number, sensitiveThresholdForPorn: number, analyzeVideo: boolean): Promise<Nsfw | null>
+export const aidxRegExp: string
+export function genAidx(t: number): string
+export function parseAidx(id: string): { date: Date; }
 export class Nsfw {
   sensitive: boolean
   porn: boolean

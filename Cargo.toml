@@ -18,6 +18,7 @@ regex = "1.10.2"
 image = { version = "0.24.7", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
 nsfw = { version = "0.1.1", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
 rust-embed = { version = "8.0.0", features = ["include-exclude", "compression"] }
+nanoid = "0.4.0"
 
 [build-dependencies]
 napi-build = "2.1.0"

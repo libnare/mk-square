@@ -6,6 +6,10 @@ Internal library for Misskey backend
     - const `aidRegExp`
     - function `genAid`
     - function `parseAid`
+- aidx
+    - const `aidxRegExp`
+    - function `genAidx`
+    - function `parseAidx`
 - correct_filename
     - function `correctFilename`
 - secure_rndstr
