@@ -8,3 +8,4 @@ pub mod check_https;
 pub mod corrent_filename;
 pub mod secure_rndstr;
 pub mod acct;
+pub mod nsfw;

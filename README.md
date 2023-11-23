@@ -16,3 +16,6 @@ Internal library for Misskey backend
 - acct
     - function `parse`
     - function `toString`
+- nsfw
+    - class `Nsfw`
+    - function `detect_sensitivity`
