@@ -1,7 +1,9 @@
 use std::fs::File;
 use std::io::BufReader;
-use image::codecs::gif::GifDecoder;
 use std::string::String;
+
+use image::codecs::gif::GifDecoder;
+use image::io::Reader as ImageReader;
 use nsfw::{create_model, examine};
 use nsfw::gif::GifParser;
 use nsfw::model::Classification;
@@ -56,7 +58,7 @@ pub async fn detect_sensitivity(path: String, mime: String, sensitive_threshold:
                 let judge = judge_prediction(&result, sensitive_threshold as f32, sensitive_threshold_for_porn as f32);
                 sensitive = judge.0;
                 porn = judge.1;
-            },
+            }
             _ => {
                 return Ok(None);
             }
@@ -97,14 +99,22 @@ async fn get_model() -> nsfw::Model {
 
 async fn detect_image(path: String) -> Option<Vec<Classification>> {
     let model = get_model().await;
-    let image = match image::open(&path) {
-        Ok(image) => image.to_rgba8(),
-        Err(err) => {
+
+    let image = match ImageReader::open(&path)
+        .map_err(|err| {
             println!("Failed to open image: {:?}", err);
-            return None;
-        }
+        })
+        .and_then(|image| image.with_guessed_format().map_err(|err| {
+            println!("Failed to guess image format: {:?}", err);
+        }))
+        .and_then(|image| image.decode().map_err(|err| {
+            println!("Failed to decode image: {:?}", err);
+        }))
+        .map(|image| image.to_rgba8()) {
+        Ok(result) => Some(result),
+        Err(_) => return None,
     };
-    match examine(&model, &image) {
+    match examine(&model, &image.unwrap()) {
         Ok(result) => Some(result),
         Err(err) => {
             println!("Failed to examine image: {:?}", err);
