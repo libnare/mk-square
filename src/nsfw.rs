@@ -1,11 +1,7 @@
-use std::fs::File;
-use std::io::BufReader;
 use std::string::String;
 
-use image::codecs::gif::GifDecoder;
 use image::io::Reader as ImageReader;
 use nsfw::{create_model, examine};
-use nsfw::gif::GifParser;
 use nsfw::model::Classification;
 use nsfw::model::Metric::{Hentai, Porn, Sexy};
 use rust_embed::RustEmbed;
@@ -22,7 +18,7 @@ pub struct Nsfw {
 }
 
 #[napi]
-pub async fn detect_sensitivity(path: String, mime: String, sensitive_threshold: f64, sensitive_threshold_for_porn: f64, _analyze_video: bool) -> napi::Result<Option<Nsfw>> {
+pub async fn detect_sensitivity(path: String, mime: String, sensitive_threshold: f64, sensitive_threshold_for_porn: f64) -> napi::Result<Option<Nsfw>> {
     let mut sensitive = false;
     let mut porn = false;
     fn judge_prediction(result: &[Classification], sensitive_threshold: f64, sensitive_threshold_for_porn: f64) -> (bool, bool) {
@@ -63,40 +59,6 @@ pub async fn detect_sensitivity(path: String, mime: String, sensitive_threshold:
                 return Ok(None);
             }
         };
-    } else if mime == "image/gif" {
-        if let Some(result) = detect_gif(path).await {
-            let mut r = Vec::new();
-
-            for frame in result {
-                if let Ok(frame) = frame {
-                    let (is_sensitive, is_porn) = judge_prediction(
-                        &frame,
-                        sensitive_threshold,
-                        sensitive_threshold_for_porn,
-                    );
-
-                    r.push((is_sensitive, is_porn));
-                }
-            }
-
-            let mut sensitive_count = 0;
-            let mut porn_count = 0;
-
-            for &(is_sensitive, is_porn) in &r {
-                if is_sensitive {
-                    sensitive_count += 1;
-                }
-                if is_porn {
-                    porn_count += 1;
-                }
-            }
-
-            let r_len = r.len();
-            sensitive = sensitive_count >= (r_len as f64 * sensitive_threshold).ceil() as usize;
-            porn = porn_count >= (r_len as f64 * sensitive_threshold_for_porn).ceil() as usize;
-        } else {
-            return Ok(None);
-        }
     }
     Ok(
         Some(
@@ -138,18 +100,4 @@ async fn detect_image(path: String) -> Option<Vec<Classification>> {
             None
         }
     }
-}
-
-async fn detect_gif(path: String) -> Option<GifParser<'static>> {
-    let model = get_model().await;
-    let file = BufReader::new(match File::open(path) {
-        Ok(file) => file,
-        Err(err) => {
-            println!("Failed to open file: {:?}", err);
-            return None;
-        }
-    });
-    let frames = GifParser::new(GifDecoder::new(file).unwrap(), Box::leak(Box::new(model)));
-
-    Some(frames)
 }

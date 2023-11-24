@@ -53,15 +53,4 @@ describe("nsfw", () => {
         expect(sensitive).toBe(false);
         expect(porn).toBe(false);
     }, 300000);
-    it("should detect gif nsfw", async () => {
-        const nsfw = await detectSensitivity(
-            `${__dirname}/../assets/Clock_1.gif`,
-            "image/gif",
-            0.5,
-            0.75,
-            false,
-        );
-        expect(nsfw.sensitive).toBe(false);
-        expect(nsfw.porn).toBe(false);
-    }, 900000);
 });
