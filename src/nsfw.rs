@@ -25,23 +25,23 @@ pub struct Nsfw {
 pub async fn detect_sensitivity(path: String, mime: String, sensitive_threshold: f64, sensitive_threshold_for_porn: f64, _analyze_video: bool) -> napi::Result<Option<Nsfw>> {
     let mut sensitive = false;
     let mut porn = false;
-    fn judge_prediction(result: &[Classification], sensitive_threshold: f32, sensitive_threshold_for_porn: f32) -> (bool, bool) {
+    fn judge_prediction(result: &[Classification], sensitive_threshold: f64, sensitive_threshold_for_porn: f64) -> (bool, bool) {
         let mut sensitive = false;
         let mut porn = false;
 
-        if result.iter().any(|x| x.metric == Sexy && x.score > sensitive_threshold) {
+        if result.iter().any(|x| x.metric == Sexy && x.score > sensitive_threshold as f32) {
             sensitive = true;
         }
 
-        if result.iter().any(|x| x.metric == Hentai && x.score > sensitive_threshold) {
+        if result.iter().any(|x| x.metric == Hentai && x.score > sensitive_threshold as f32) {
             sensitive = true;
         }
 
-        if result.iter().any(|x| x.metric == Porn && x.score > sensitive_threshold) {
+        if result.iter().any(|x| x.metric == Porn && x.score > sensitive_threshold as f32) {
             sensitive = true;
         }
 
-        if result.iter().any(|x| x.metric == Porn && x.score > sensitive_threshold_for_porn) {
+        if result.iter().any(|x| x.metric == Porn && x.score > sensitive_threshold_for_porn as f32) {
             porn = true;
         }
 
@@ -55,7 +55,7 @@ pub async fn detect_sensitivity(path: String, mime: String, sensitive_threshold:
     } {
         match detect_image(path).await {
             Some(result) => {
-                let judge = judge_prediction(&result, sensitive_threshold as f32, sensitive_threshold_for_porn as f32);
+                let judge = judge_prediction(&result, sensitive_threshold, sensitive_threshold_for_porn);
                 sensitive = judge.0;
                 porn = judge.1;
             }
@@ -65,18 +65,35 @@ pub async fn detect_sensitivity(path: String, mime: String, sensitive_threshold:
         };
     } else if mime == "image/gif" {
         if let Some(result) = detect_gif(path).await {
+            let mut r = Vec::new();
+
             for frame in result {
                 if let Ok(frame) = frame {
                     let (is_sensitive, is_porn) = judge_prediction(
                         &frame,
-                        sensitive_threshold as f32,
-                        sensitive_threshold_for_porn as f32,
+                        sensitive_threshold,
+                        sensitive_threshold_for_porn,
                     );
 
-                    sensitive |= is_sensitive;
-                    porn |= is_porn;
+                    r.push((is_sensitive, is_porn));
                 }
             }
+
+            let mut sensitive_count = 0;
+            let mut porn_count = 0;
+
+            for &(is_sensitive, is_porn) in &r {
+                if is_sensitive {
+                    sensitive_count += 1;
+                }
+                if is_porn {
+                    porn_count += 1;
+                }
+            }
+
+            let r_len = r.len();
+            sensitive = sensitive_count >= (r_len as f64 * sensitive_threshold).ceil() as usize;
+            porn = porn_count >= (r_len as f64 * sensitive_threshold_for_porn).ceil() as usize;
         } else {
             return Ok(None);
         }
