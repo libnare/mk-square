@@ -1,6 +1,6 @@
 {
   "name": "@libnare/mk-square",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/libnare/mk-square.git",
   "description": "Mk^ - Internal library for Misskey backend",
   "main": "index.js",
