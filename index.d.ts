@@ -6,6 +6,7 @@
 export const aidRegExp: string
 export function genAid(t: number): string
 export function parseAid(id: string): { date: Date; }
+export function isSafeAidT(t: number): boolean
 export function correctFilename(filename: string, ext?: string | undefined | null): string
 export const L_CHARS: string
 export function secureRndstr(length?: number | undefined | null, chars?: string | undefined | null): string
@@ -15,10 +16,11 @@ export interface Acct {
 }
 export function parse(acct: string): { username: string; host: string | null; }
 export function toString(acct: Acct): string
-export function detectSensitivity(path: string, mime: string, sensitiveThreshold: number, sensitiveThresholdForPorn: number, analyzeVideo: boolean): Promise<Nsfw | null>
+export function detectSensitivity(path: string, mime: string, sensitiveThreshold: number, sensitiveThresholdForPorn: number): Promise<Nsfw | null>
 export const aidxRegExp: string
 export function genAidx(t: number): string
 export function parseAidx(id: string): { date: Date; }
+export function isSafeAidxT(t: number): boolean
 export class Nsfw {
   sensitive: boolean
   porn: boolean

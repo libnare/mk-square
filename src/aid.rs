@@ -49,3 +49,8 @@ fn parse_aid(env: Env, id: String) -> napi::Result<JsObject> {
 
     return Ok(obj);
 }
+
+#[napi]
+fn is_safe_aid_t(t: i64) -> bool {
+    t > TIME2000
+}

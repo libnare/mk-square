@@ -60,3 +60,8 @@ fn parse_aidx(env: Env, id: String) -> napi::Result<JsObject> {
 
     return Ok(obj);
 }
+
+#[napi]
+fn is_safe_aidx_t(t: i64) -> bool {
+    t > TIME2000
+}
